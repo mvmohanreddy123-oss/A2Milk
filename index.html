@@ -1,7 +1,383 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0; url='A2Milk/index.html'" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taste of Desi Milk | A2 Gir Cow Dairy Subscription</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f6fbef',
+                            100: '#eaf5dc',
+                            200: '#d5ebb8',
+                            300: '#b8dc8b',
+                            400: '#9bc860',
+                            500: '#7cb03e', // Primary Brand Color
+                            600: '#608c2c',
+                            700: '#4a6b24',
+                            800: '#3d5521',
+                            900: '#34481f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #7cb03e; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #608c2c; }
+        
+        /* Hide number input arrows */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] { -moz-appearance: textfield; }
+
+        /* Optimized Hero: Removes black bars by matching container height to image ratio */
+        .hero-wrapper {
+            position: relative;
+            width: 100%;
+            /* This ensures the container stays the same shape as your high-quality image */
+            aspect-ratio: 16 / 9; 
+            overflow: hidden;
+            background-color: #f5f5f5;
+        }
+
+        .hero-img-full {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Back to cover but container is now correctly sized */
+            object-position: center;
+            display: block;
+        }
+
+        .hero-overlay-content {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.6) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Responsive adjustments for the wrapper */
+        @media (max-width: 768px) {
+            .hero-wrapper {
+                aspect-ratio: 4 / 3; /* Taller ratio for mobile so text fits better */
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-wrapper {
+                aspect-ratio: 1 / 1; /* Square for very small screens */
+            }
+        }
+    </style>
 </head>
+<body class="bg-stone-50 text-gray-800 antialiased">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2 cursor-pointer">
+                    <span class="text-3xl">🐄</span>
+                    <span class="font-bold text-xl text-brand-700 tracking-wide">Taste of Desi Milk</span>
+                </div>
+                <div class="flex items-center">
+                    <a href="#cart-section" class="flex items-center gap-2 bg-brand-50 text-brand-700 px-4 py-2 rounded-full font-medium hover:bg-brand-100 transition">
+                        <span>🛒 Cart:</span>
+                        <span id="cartCountBadge" class="bg-brand-500 text-white text-xs px-2 py-1 rounded-full">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section: No Black Bars, Edge-to-Edge Full Image -->
+    <header class="hero-wrapper">
+        <img src="https://i.pinimg.com/736x/61/b9/f1/61b9f13c85bd13b69986a50a8bcd7976.jpg" alt="Gir Cows" class="hero-img-full">
+        <div class="hero-overlay-content">
+            <div class="max-w-4xl mx-auto px-4">
+                <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 text-white drop-shadow-2xl">100% Pure A2 Gir Cow Milk</h1>
+                <p class="text-sm md:text-lg lg:text-xl text-gray-100 mb-6 md:mb-10 drop-shadow-lg font-medium max-w-2xl mx-auto">
+                    The authentic Taste of Desi Milk—farm fresh, unadulterated, and delivered in traditional pots to your doorstep.
+                </p>
+                <a href="#products-section" class="bg-brand-500 hover:bg-brand-600 text-white font-bold py-3 px-8 md:py-4 md:px-12 rounded-full shadow-2xl transition transform hover:-translate-y-1 inline-block text-lg">
+                    Start Subscription
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <!-- Products Section -->
+        <section id="products-section" class="mb-16">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Our Traditional Products</h2>
+                <div class="h-1 w-20 bg-brand-500 mx-auto rounded"></div>
+            </div>
+
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Products injected via JS -->
+            </div>
+        </section>
+
+        <!-- Order details Section -->
+        <section id="cart-section" class="bg-white rounded-2xl shadow-xl p-6 md:p-8 max-w-4xl mx-auto border border-gray-100">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                <!-- Customer Details -->
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <span>📍</span> Delivery Details
+                    </h3>
+                    <div class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Full Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="name" placeholder="E.g. Mohan...." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number <span class="text-red-500">*</span></label>
+                            <input type="tel" id="phone" placeholder="+91 910011...." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Full Address <span class="text-red-500">*</span></label>
+                            <textarea id="address" rows="3" placeholder="House No, Street, Landmark, City" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition bg-gray-50 resize-none"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="flex flex-col h-full">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <span>🧾</span> Order Summary
+                    </h3>
+                    
+                    <div id="order-summary-content" class="flex-grow bg-stone-50 rounded-xl p-5 border border-stone-200 overflow-y-auto max-h-64 mb-6">
+                        <p class="text-gray-500 text-center italic mt-4">Your cart is empty. Add products to start.</p>
+                    </div>
+
+                    <button onclick="sendWhatsAppOrder()" class="w-full bg-[#25D366] hover:bg-[#1ebd5a] text-white font-bold py-4 rounded-xl shadow-lg transition flex justify-center items-center gap-3 text-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                        </svg>
+                        Place Order on WhatsApp
+                    </button>
+                    <p class="text-xs text-center text-gray-400 mt-3">No payment required now. Pay on delivery.</p>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-8 text-center">
+        <p>&copy; 2026 Taste of Desi Milk | A2 Gir Cow Dairy. All rights reserved.</p>
+        <p class="text-sm mt-2 text-gray-500">Pure, organic, and ethically sourced dairy products delivered in traditional clay pots.</p>
+    </footer>
+
+    <!-- Application Logic -->
+    <script>
+        const products = [
+            {
+                id: 'gir_milk',
+                name: 'A2 Gir Cow Milk',
+                price: 90,
+                unit: 'Litre',
+                icon: '🥛',
+                image: 'https://i.pinimg.com/736x/b5/e3/c6/b5e3c65ef3a52f030c296d4df7605b4b.jpg',
+                desc: 'Farm fresh, raw, and unadulterated pure A2 milk directly from happy Gir cows.'
+            },
+            {
+                id: 'pot_curd',
+                name: 'Desi Pot Curd',
+                price: 120,
+                unit: 'Pot (500g)',
+                icon: '🏺',
+                image: 'https://i.pinimg.com/736x/d1/0e/de/d10ede122569351840f5fb45c9338852.jpg',
+                desc: 'Thick, creamy curd naturally set in traditional clay pots for superior taste and cooling.'
+            },
+            {
+                id: 'pot_ghee',
+                name: 'Ghee',
+                price: 1250,
+                unit: 'Pot (500ml)',
+                icon: '🏺',
+                image: 'https://i.pinimg.com/736x/84/35/0b/84350bce6d3d7f8136c50bea7814397e.jpg',
+                desc: 'A2 Bilona ghee stored in traditional clay pots to preserve nutrients and aroma.'
+            },
+            {
+                id: 'paneer',
+                name: 'Soft Malai Paneer',
+                price: 130,
+                unit: '250g',
+                icon: '🧀',
+                image: 'https://i.pinimg.com/736x/a7/e4/4e/a7e44ed1e496f0d7d18f6a6f16a0be4e.jpg',
+                desc: 'Freshly made, protein-rich, melt-in-the-mouth cottage cheese.'
+            }
+        ];
+
+        let cart = {};
+        products.forEach(p => {
+            cart[p.id] = { qty: 0, days: 30 };
+        });
+
+        function showToast(message, type = 'error') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgColor = type === 'error' ? 'bg-red-500' : 'bg-green-500';
+            const icon = type === 'error' ? '⚠️' : '✅';
+            toast.className = `${bgColor} text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3 transform transition-all duration-300 translate-x-full opacity-0`;
+            toast.innerHTML = `<span class="text-xl">${icon}</span> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.remove('translate-x-full', 'opacity-0'), 10);
+            setTimeout(() => {
+                toast.classList.add('translate-x-full', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function updateQty(id, change) {
+            let newQty = cart[id].qty + change;
+            if (newQty < 0) newQty = 0;
+            cart[id].qty = newQty;
+            document.getElementById(`qty_${id}`).innerText = newQty;
+            updateSummaryUI();
+        }
+
+        function updateDays(id) {
+            let inputElement = document.getElementById(`days_${id}`);
+            let val = parseInt(inputElement.value);
+            if (isNaN(val) || val < 1) {
+                val = 1;
+                inputElement.value = 1;
+            }
+            cart[id].days = val;
+            updateSummaryUI();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById("product-grid");
+            let html = "";
+            products.forEach(p => {
+                html += `
+                <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover transition-transform hover:scale-105 duration-500">
+                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold text-brand-700 shadow-sm">
+                            ₹${p.price} / ${p.unit}
+                        </div>
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">${p.icon} ${p.name}</h3>
+                        <p class="text-sm text-gray-500 flex-grow mb-5 leading-relaxed">${p.desc}</p>
+                        <div class="bg-brand-50 p-4 rounded-xl space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-semibold text-gray-700">Daily Qty:</span>
+                                <div class="flex items-center bg-white rounded-lg shadow-sm border border-brand-100 overflow-hidden">
+                                    <button onclick="updateQty('${p.id}', -1)" class="px-3 py-1 bg-white hover:bg-gray-50 text-brand-600 font-bold transition">-</button>
+                                    <span id="qty_${p.id}" class="w-10 text-center font-bold text-gray-800 text-sm">0</span>
+                                    <button onclick="updateQty('${p.id}', 1)" class="px-3 py-1 bg-brand-500 hover:bg-brand-600 text-white font-bold transition">+</button>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-semibold text-gray-700">Sub. Days:</span>
+                                <div class="flex items-center gap-1">
+                                    <input type="number" id="days_${p.id}" value="30" min="1" onchange="updateDays('${p.id}')" class="w-16 px-2 py-1 text-center rounded-lg border border-brand-200 focus:outline-none focus:ring-1 focus:ring-brand-500 text-sm font-semibold">
+                                    <span class="text-xs text-gray-500">Days</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            grid.innerHTML = html;
+        }
+
+        function updateSummaryUI() {
+            const summaryContainer = document.getElementById("order-summary-content");
+            const badge = document.getElementById("cartCountBadge");
+            let html = "";
+            let totalItems = 0;
+            let estTotalCost = 0;
+            products.forEach(p => {
+                let qty = cart[p.id].qty;
+                let days = cart[p.id].days;
+                if (qty > 0) {
+                    totalItems += qty;
+                    let cost = qty * p.price * days;
+                    estTotalCost += cost;
+                    html += `
+                    <div class="flex justify-between items-center py-3 border-b border-gray-200 last:border-0">
+                        <div>
+                            <p class="font-semibold text-gray-800">${p.name}</p>
+                            <p class="text-xs text-gray-500">${qty} ${p.unit} × ${days} Days</p>
+                        </div>
+                        <div class="text-right"><p class="font-bold text-brand-700">₹${cost}</p></div>
+                    </div>`;
+                }
+            });
+            badge.innerText = totalItems;
+            if (totalItems === 0) {
+                summaryContainer.innerHTML = '<p class="text-gray-400 text-center italic mt-10 h-full flex items-center justify-center">Your cart is empty.</p>';
+            } else {
+                html += `<div class="mt-4 pt-4 border-t-2 border-stone-300 flex justify-between items-center"><span class="font-bold text-gray-900">Est. Total:</span><span class="font-bold text-xl text-brand-600">₹${estTotalCost}</span></div>`;
+                summaryContainer.innerHTML = html;
+            }
+        }
+
+        function sendWhatsAppOrder() {
+            let name = document.getElementById("name").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let address = document.getElementById("address").value.trim();
+            if(!name || !phone || !address) { showToast("Please fill all details.", "error"); return; }
+            let hasItems = false;
+            let orderMsg = `*🌿 New Subscription Order*%0A%0A👤 Name: ${name}%0A📞 Phone: ${phone}%0A🏠 Address: ${address}%0A%0A*📦 Items:*%0A`;
+            let estTotalCost = 0;
+            products.forEach(p => {
+                let qty = cart[p.id].qty;
+                let days = cart[p.id].days;
+                if(qty > 0){
+                    hasItems = true;
+                    let cost = qty * p.price * days;
+                    estTotalCost += cost;
+                    orderMsg += `▪️ *${p.name}* (${qty} ${p.unit}/day - ${days} Days): ₹${cost}%0A`;
+                }
+            });
+            if(!hasItems){ showToast("Cart is empty!", "error"); return; }
+            orderMsg += `%0A*💰 Total: ₹${estTotalCost}*`;
+            let whatsappNumber = "919876543210"; 
+            showToast("Opening WhatsApp...", "success");
+            setTimeout(() => window.open(`https://wa.me/${whatsappNumber}?text=${orderMsg}`, "_blank"), 1000);
+        }
+
+        renderProducts();
+        updateSummaryUI();
+    </script>
+</body>
 </html>
