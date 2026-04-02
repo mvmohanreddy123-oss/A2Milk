@@ -370,8 +370,8 @@
                 }
             });
             if(!hasItems){ showToast("Cart is empty!", "error"); return; }
-            orderMsg += `%0A*💰 Total: ₹${estTotalCost}*`;
-            let whatsappNumber = "9100604776"; 
+            orderMsg += `%0A*💰 Total: ₹${estTotalCost}*`
+            let whatsappNumber = "919100604776".replace(/\D/g, '');
             showToast("Opening WhatsApp...", "success");
             setTimeout(() => window.open(`https://wa.me/${whatsappNumber}?text=${orderMsg}`, "_blank"), 1000);
         }
